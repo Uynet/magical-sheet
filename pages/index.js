@@ -33,12 +33,17 @@ function MusicList(props) {
   );
 }
 function MovieClip(props) {
+  const URLtoService = (url) => {
+    if (url.indexOf("youtu") > -1) return "youtube";
+    if (url.indexOf("spotify") > -1) return "spotify";
+    if (url.indexOf("soundcloud") > -1) return "soundcloud";
+    return null;
+  };
   const musicData = props.musicData;
   const url = musicData
     ? musicData["リンク(SoundCloud, Spotify, YouTube)"]
-    : "a";
-  if (musicData != null)
-    console.log(musicData["リンク(SoundCloud, Spotify, YouTube)"]);
+    : "";
+  console.log(URLtoService(url));
   return <div style={{ background: "#ddd", width: "50vw" }}>{url}</div>;
 }
 
