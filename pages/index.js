@@ -32,6 +32,26 @@ function MusicList(props) {
     </>
   );
 }
+function YoutubeEmbed(props) {
+  const len = props.url.length;
+  const ID = props.url.substr(len - 11, 11);
+  console.log(ID);
+  const embedURL = "https://www.youtube.com/embed/" + ID;
+  //https://www.youtube.com/G2QGQd-yQ0s
+  //https://www.youtube.com/embed/G2QGQd-yQ0s
+  console.log(embedURL);
+  return (
+    <iframe
+      style={{
+        width: "100%",
+      }}
+      src={embedURL}
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  );
+}
 function MovieClip(props) {
   const URLtoService = (url) => {
     if (url.indexOf("spotify") > -1) return "spotify";
@@ -45,19 +65,25 @@ function MovieClip(props) {
     ? musicData["リンク(SoundCloud, Spotify, YouTube)"]
     : "";
   const serviceName = URLtoService(url);
+  console.log(url);
+  //src = "https://www.youtube.com/embed/G2QGQd-yQ0s";
   return (
     <div style={{ background: "#ddd", width: "50vw" }}>
-      {serviceName == "youtube" && (
-        <iframe
-          style={{
-            width: "100%",
-          }}
-          src="https://www.youtube.com/embed/G2QGQd-yQ0s"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+      {serviceName == "youtube" && <YoutubeEmbed url={url} />}
+      {serviceName == "soundcloud" && (
+        <>
+          <iframe
+            width="100%"
+            height="300"
+            scrolling="no"
+            frameBorder="no"
+            allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1076869507&color=%23ff55d0&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+          ></iframe>
+          <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
+            <a href="https://soundcloud.com/uynet/45jqy2ydqyih"></a>
+          </div>{" "}
+        </>
       )}
     </div>
   );
@@ -82,7 +108,6 @@ export default class Home extends React.Component {
   }
   select(music) {
     this.setState({ currentMusic: music });
-    console.log(music);
   }
   render() {
     return (
