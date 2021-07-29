@@ -12,7 +12,7 @@ function MusicList(props) {
       <div
         style={{
           textAlign: "left",
-          height: "80vh",
+          height: "90vh",
           overflow: "auto",
         }}
       >
@@ -50,7 +50,7 @@ function YoutubeEmbed(props) {
     <iframe
       style={{
         width: "100%",
-        height: "50%",
+        height: "60vh",
       }}
       src={embedURL}
       frameBorder="0"
@@ -80,13 +80,13 @@ function MovieClip(props) {
   //src = "https://www.youtube.com/embed/G2QGQd-yQ0s";
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ width: "60vw" }}>
+        {serviceName == "youtube" && <YoutubeEmbed url={url} />}
+        {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
+        {serviceName == "spotify" && <SpotifyEmbed url={url} />}
+      </div>
       {musicData && (
         <>
-          <div style={{ background: "#ddd", width: "60vw" }}>
-            {serviceName == "youtube" && <YoutubeEmbed url={url} />}
-            {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
-            {serviceName == "spotify" && <SpotifyEmbed url={url} />}
-          </div>
           <div className={styles.musicName}>{musicName}</div>
           <div>書いた人 : {writer} </div>
           <div>コメント : {comment} </div>
@@ -127,13 +127,16 @@ export default class Home extends React.Component {
           <MovieClip musicData={this.state.currentMusic} />
           <MusicList data={this.props.data} onClick={this.select} />
         </div>
-        <a
-          className={styles.link}
-          href="https://docs.google.com/spreadsheets/d/1KasjqVSUkU0JHHYvpmytPJI_tBIkqpV_ZzhIBFBCjFc/edit#gid=0"
-        >
-          おすすめ曲き書放題
-        </a>
-        の曲を自動で再生するwebプレイヤーです
+
+        <div style={{ fontSize: 11, padding: 10 }}>
+          <a
+            className={styles.link}
+            href="https://docs.google.com/spreadsheets/d/1KasjqVSUkU0JHHYvpmytPJI_tBIkqpV_ZzhIBFBCjFc/edit#gid=0"
+          >
+            おすすめ曲き書放題
+          </a>
+          の曲を自動で再生するwebプレイヤーです
+        </div>
       </div>
     );
   }
