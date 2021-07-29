@@ -34,10 +34,52 @@ function MusicList(props) {
   );
 }
 function SpotifyEmbed(props) {
-  return <>{props.url}</>;
+  const url = props.url;
+  const ID = url.split("track/")[1].split("?")[0];
+  return (
+    <>
+      <iframe
+        src={"https://open.spotify.com/embed/track/" + ID}
+        width="100%"
+        height="380"
+        frameBorder="0"
+        allowtransparency="true"
+        allow="encrypted-media"
+      ></iframe>
+    </>
+  );
 }
 function SoundCloudEmbed(props) {
-  return <>{props.url}</>;
+  return (
+    <>
+      <iframe
+        width="100%"
+        height="300"
+        scrolling="no"
+        frameBorder="no"
+        allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1064361319&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+      ></iframe>
+      <div
+        style={{
+          fontSize: 10,
+          color: "#cccccc",
+          lineBreak: "anywhere",
+          wordBreak: "normal",
+          overflow: "hidden",
+          whiterSpace: "nowrap",
+          textOverflow: "ellipsis",
+          fontFamily:
+            "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
+          fontWeight: 100,
+        }}
+      >
+        <a href="https://soundcloud.com/uynet/45jqy2ydqyih">
+          約束の地と最後の夏 / muyu + uynet
+        </a>
+      </div>
+    </>
+  );
 }
 function YoutubeEmbed(props) {
   const len = props.url.length;
