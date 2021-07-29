@@ -35,7 +35,7 @@ function MovieClip() {
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
   static async getInitialProps({ Component, router, ctx }) {
     try {
@@ -50,7 +50,7 @@ export default class Home extends React.Component {
   }
   render() {
     return (
-      <div className={styles.container}>
+      <React.Fragment className={styles.container}>
         <Head>
           <title>おすすめ曲聴き放題</title>
           <link rel="icon" href="/favicon.ico" />
@@ -66,7 +66,7 @@ export default class Home extends React.Component {
           おすすめ曲き書放題
         </a>
         の曲を自動で再生するwebプレイヤーです
-      </div>
+      </React.Fragment>
     );
   }
 }
