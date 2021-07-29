@@ -88,8 +88,8 @@ function MovieClip(props) {
       {musicData && (
         <>
           <div className={styles.musicName}>{musicName}</div>
-          <div>書いた人 : {writer} </div>
-          <div>コメント : {comment} </div>
+          <div style={{ fontSize: 9 }}>書いた人 : {writer} </div>
+          <div style={{ fontSize: 9 }}>コメント : {comment} </div>
         </>
       )}
     </div>
@@ -128,14 +128,14 @@ export default class Home extends React.Component {
           <MusicList data={this.props.data} onClick={this.select} />
         </div>
 
-        <div style={{ fontSize: 11, padding: 10 }}>
+        <div style={{ fontSize: 8, padding: 10 }}>
           <a
             className={styles.link}
             href="https://docs.google.com/spreadsheets/d/1KasjqVSUkU0JHHYvpmytPJI_tBIkqpV_ZzhIBFBCjFc/edit#gid=0"
           >
             おすすめ曲き書放題
           </a>
-          の曲を自動で再生するwebプレイヤーです
+          専用のwebプレイヤーです
         </div>
       </div>
     );
