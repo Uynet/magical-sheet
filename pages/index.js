@@ -106,7 +106,6 @@ function MovieClip(props) {
     if (url.indexOf("spotify") > -1) return "spotify";
     if (url.indexOf("youtu") > -1) return "youtube";
     if (url.indexOf("soundcloud") > -1) return "soundcloud";
-    if (url.indexOf("bandcamp") > -1) return "bandcamp";
     return null;
   };
   const musicData = props.musicData;
@@ -126,6 +125,24 @@ function MovieClip(props) {
         {serviceName == "youtube" && <YoutubeEmbed url={url} />}
         {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
         {serviceName == "spotify" && <SpotifyEmbed url={url} />}
+        {serviceName == null && (
+          <div
+            style={{
+              background: "#eee",
+              width: "100%",
+              height: "60vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 10,
+            }}
+          >
+            <div>
+              <div>再生できません</div>
+              <div>{url}</div>
+            </div>
+          </div>
+        )}
       </div>
       {musicData && (
         <>
