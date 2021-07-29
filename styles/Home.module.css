@@ -28,6 +28,10 @@
 .musicItem:hover {
   background: #eeeeee;
 }
+.musicName {
+  font-size: 22px;
+  font-weight: bold;
+}
 
 @media (max-width: 600px) {
   .grid {

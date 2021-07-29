@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import React, { useState, useEffect } from "react";
+import getYoutubeID from "get-youtube-id";
 
 const api =
   "https://script.googleusercontent.com/macros/echo?user_content_key=02h5-uVuYn9hN21A0dxfKobuMeyA7EDwIh5smQnUWTQjC3gdaGubyLaZwR8wIcSZrWjXZxT-GEmWaEQ5h-awWW2-zp6kq3Jjm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnF9JHnUKZDtXFUx0NPKGHUP6raWBymi1qgSUO-E3ZRnOO4kvFPlD74JeMC6jLfhKMkk-L_ReNOPV7PgbI06uhayqzFgB-1VsLQ&lib=MpX9rb-90rMYO9S6HI_TeypeSVVadBdJf";
@@ -32,18 +33,24 @@ function MusicList(props) {
     </>
   );
 }
+function SpotifyEmbed(props) {
+  return <>{props.url}</>;
+}
+function SoundCloudEmbed(props) {
+  return <>{props.url}</>;
+}
 function YoutubeEmbed(props) {
   const len = props.url.length;
-  const ID = props.url.substr(len - 11, 11);
+  const url = props.url;
+  const ID = getYoutubeID(url);
   console.log(ID);
   const embedURL = "https://www.youtube.com/embed/" + ID;
-  //https://www.youtube.com/G2QGQd-yQ0s
-  //https://www.youtube.com/embed/G2QGQd-yQ0s
   console.log(embedURL);
   return (
     <iframe
       style={{
         width: "100%",
+        height: "50%",
       }}
       src={embedURL}
       frameBorder="0"
@@ -64,25 +71,25 @@ function MovieClip(props) {
   const url = musicData
     ? musicData["リンク(SoundCloud, Spotify, YouTube)"]
     : "";
+  const musicName = musicData ? musicData["曲名"] : "";
+  const writer = musicData ? musicData["書いた人(not composer)"] : "";
+  const comment = musicData ? musicData["コメント"] : "";
   const serviceName = URLtoService(url);
+  console.log(musicData);
   console.log(url);
   //src = "https://www.youtube.com/embed/G2QGQd-yQ0s";
   return (
-    <div style={{ background: "#ddd", width: "50vw" }}>
-      {serviceName == "youtube" && <YoutubeEmbed url={url} />}
-      {serviceName == "soundcloud" && (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      {musicData && (
         <>
-          <iframe
-            width="100%"
-            height="300"
-            scrolling="no"
-            frameBorder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1076869507&color=%23ff55d0&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-          ></iframe>
-          <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;">
-            <a href="https://soundcloud.com/uynet/45jqy2ydqyih"></a>
-          </div>{" "}
+          <div style={{ background: "#ddd", width: "60vw" }}>
+            {serviceName == "youtube" && <YoutubeEmbed url={url} />}
+            {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
+            {serviceName == "spotify" && <SpotifyEmbed url={url} />}
+          </div>
+          <div className={styles.musicName}>{musicName}</div>
+          <div>書いた人 : {writer} </div>
+          <div>コメント : {comment} </div>
         </>
       )}
     </div>
