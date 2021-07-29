@@ -20,9 +20,13 @@
   align-items: center;
 }
 .musicItem {
-  height: 18px;
+  padding: 4px;
   font-size: 14px;
   border-bottom: dashed 1px #888;
+  cursor: pointer;
+}
+.musicItem:hover {
+  background: #eeeeee;
 }
 
 @media (max-width: 600px) {
