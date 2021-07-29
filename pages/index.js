@@ -34,17 +34,33 @@ function MusicList(props) {
 }
 function MovieClip(props) {
   const URLtoService = (url) => {
-    if (url.indexOf("youtu") > -1) return "youtube";
     if (url.indexOf("spotify") > -1) return "spotify";
+    if (url.indexOf("youtu") > -1) return "youtube";
     if (url.indexOf("soundcloud") > -1) return "soundcloud";
+    if (url.indexOf("bandcamp") > -1) return "bandcamp";
     return null;
   };
   const musicData = props.musicData;
   const url = musicData
     ? musicData["リンク(SoundCloud, Spotify, YouTube)"]
     : "";
-  console.log(URLtoService(url));
-  return <div style={{ background: "#ddd", width: "50vw" }}>{url}</div>;
+  const serviceName = URLtoService(url);
+  return (
+    <div style={{ background: "#ddd", width: "50vw" }}>
+      {serviceName == "youtube" && (
+        <iframe
+          style={{
+            width: "100%",
+          }}
+          src="https://www.youtube.com/embed/G2QGQd-yQ0s"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      )}
+    </div>
+  );
 }
 
 export default class Home extends React.Component {
