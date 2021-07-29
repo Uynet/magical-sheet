@@ -19,6 +19,12 @@
   justify-content: center;
   align-items: center;
 }
+.musicItem {
+  height: 18px;
+  font-size: 14px;
+  border-bottom: dashed 1px #888;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
