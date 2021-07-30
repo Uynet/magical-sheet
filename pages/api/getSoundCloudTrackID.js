@@ -11,11 +11,3 @@ export default function handler(req, res) {
     });
   });
 }
-
-/*
-export default function handler(req, res) {
-  fetch("https://soundcloud.com/uynet/45jqy2ydqyih").then((response) => {
-    res.status(200).json(response.body);
-  });
-}
-*/

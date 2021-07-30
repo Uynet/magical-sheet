@@ -107,7 +107,7 @@ function SoundCloudEmbed(props) {
 }
 function BandCampEmbed(props) {
   const url = props.url;
-  const [trackID, setTrackID] = React.useState();
+  const [trackCode, setTrackID] = React.useState();
   const axios = axiosBase.create({
     baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
     params: {
@@ -120,17 +120,26 @@ function BandCampEmbed(props) {
     },
     responseType: "json",
   });
-  if (trackID === undefined) {
+  if (trackCode === undefined) {
     axios.get("api/getBandCampTrackID").then((res) => {
-      //setTrackID(res.data.trackID);
+      console.log(res.data.trackCode);
+      setTrackID(res.data.trackCode);
     });
   }
   return (
-    <iframe
-      style={{ border: 0, width: 350, height: 470 }}
-      src="https://bandcamp.com/EmbeddedPlayer/album=3084686932/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=3844972671/transparent=true/"
-      seamless
-    ></iframe>
+    <>
+      {trackCode === undefined ? (
+        <></>
+      ) : (
+        <iframe
+          style={{ border: 0, width: 350, height: 470 }}
+          src={trackCode}
+          seamless
+        >
+          trackCode
+        </iframe>
+      )}
+    </>
   );
 }
 function YoutubeEmbed(props) {
