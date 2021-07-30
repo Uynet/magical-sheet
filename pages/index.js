@@ -133,7 +133,7 @@ function BandCampEmbed(props) {
   return (
     <>
       {trackCode === undefined ? (
-        <></>
+        <div style={{ width: 350, height: 470, background: "#eee" }}></div>
       ) : (
         <iframe
           style={{ border: 0, width: 350, height: 470 }}
