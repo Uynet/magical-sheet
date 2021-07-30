@@ -9,6 +9,8 @@ const api =
   "https://script.googleusercontent.com/macros/echo?user_content_key=02h5-uVuYn9hN21A0dxfKobuMeyA7EDwIh5smQnUWTQjC3gdaGubyLaZwR8wIcSZrWjXZxT-GEmWaEQ5h-awWW2-zp6kq3Jjm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnF9JHnUKZDtXFUx0NPKGHUP6raWBymi1qgSUO-E3ZRnOO4kvFPlD74JeMC6jLfhKMkk-L_ReNOPV7PgbI06uhayqzFgB-1VsLQ&lib=MpX9rb-90rMYO9S6HI_TeypeSVVadBdJf";
 
 function MusicList(props) {
+  const currentMusicNo = props.currentMusic ? props.currentMusic["No"] : null;
+  console.log(currentMusicNo);
   return (
     <>
       <div
@@ -19,10 +21,14 @@ function MusicList(props) {
         }}
       >
         {props.data.map((d, i) => {
+          const isSelected = currentMusicNo == d["No"];
+          const className = isSelected
+            ? styles.selectedMusicItem
+            : styles.musicItem;
           return (
             <div
               key={i}
-              className={styles.musicItem}
+              className={className}
               onClick={() => {
                 props.onClick(d);
               }}
@@ -69,7 +75,6 @@ function SoundCloudEmbed(props) {
   });
   if (trackID === undefined) {
     axios.get("api/getSoundCloudTrackID").then((res) => {
-      console.log(res.data.trackID);
       setTrackID(res.data.trackID);
     });
   }
@@ -114,9 +119,7 @@ function YoutubeEmbed(props) {
   const len = props.url.length;
   const url = props.url;
   const ID = getYoutubeID(url);
-  console.log(ID);
   const embedURL = "https://www.youtube.com/embed/" + ID;
-  console.log(embedURL);
   return (
     <iframe
       style={{
@@ -147,8 +150,6 @@ function MovieClip(props) {
   const writer = musicData ? musicData["書いた人(not composer)"] : "";
   const comment = musicData ? musicData["コメント"] : "";
   const serviceName = URLtoService(url);
-  console.log(musicData);
-  console.log(url);
   //src = "https://www.youtube.com/embed/G2QGQd-yQ0s";
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -218,7 +219,11 @@ export default class Home extends React.Component {
         </Head>
         <div style={{ display: "flex" }}>
           <MovieClip musicData={this.state.currentMusic} />
-          <MusicList data={this.props.data} onClick={this.select} />
+          <MusicList
+            data={this.props.data}
+            onClick={this.select}
+            currentMusic={this.state.currentMusic}
+          />
         </div>
 
         <div style={{ fontSize: 8, padding: 10 }}>

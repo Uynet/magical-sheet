@@ -15,6 +15,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.selectedMusicItem {
+  padding: 4px;
+  font-size: 11px;
+  border-bottom: dashed 1px #888;
+  background: #dddddd;
+  cursor: pointer;
+}
 .musicItem {
   padding: 4px;
   font-size: 11px;
