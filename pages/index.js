@@ -63,7 +63,6 @@ function SoundCloudEmbed(props) {
   const axios = axiosBase.create({
     baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
     params: {
-      test: "unko",
       TrackURL: url,
     },
     headers: {
@@ -107,6 +106,25 @@ function SoundCloudEmbed(props) {
   );
 }
 function BandCampEmbed(props) {
+  const url = props.url;
+  const [trackID, setTrackID] = React.useState();
+  const axios = axiosBase.create({
+    baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
+    params: {
+      TrackURL: url,
+    },
+    headers: {
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "Access-Control-Allow-Origin": "*",
+    },
+    responseType: "json",
+  });
+  if (trackID === undefined) {
+    axios.get("api/getBandCampTrackID").then((res) => {
+      //setTrackID(res.data.trackID);
+    });
+  }
   return (
     <iframe
       style={{ border: 0, width: 350, height: 470 }}
