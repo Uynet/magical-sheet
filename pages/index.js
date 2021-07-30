@@ -2,6 +2,8 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import React, { useState, useEffect } from "react";
 import getYoutubeID from "get-youtube-id";
+import axiosBase from "axios";
+const fetch = require("node-fetch");
 
 const api =
   "https://script.googleusercontent.com/macros/echo?user_content_key=02h5-uVuYn9hN21A0dxfKobuMeyA7EDwIh5smQnUWTQjC3gdaGubyLaZwR8wIcSZrWjXZxT-GEmWaEQ5h-awWW2-zp6kq3Jjm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnF9JHnUKZDtXFUx0NPKGHUP6raWBymi1qgSUO-E3ZRnOO4kvFPlD74JeMC6jLfhKMkk-L_ReNOPV7PgbI06uhayqzFgB-1VsLQ&lib=MpX9rb-90rMYO9S6HI_TeypeSVVadBdJf";
@@ -50,6 +52,24 @@ function SpotifyEmbed(props) {
   );
 }
 function SoundCloudEmbed(props) {
+  const url = "https://soundcloud.com/uynet/45jqy2ydqyih";
+  const axios = axiosBase.create({
+    baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
+    params: {
+      test: "unko",
+      TrackURL: url,
+    },
+    headers: {
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "Access-Control-Allow-Origin": "*",
+    },
+    responseType: "json",
+  });
+  axios.get("api/getSoundCloudTrackID").then((res) => {
+    console.log(res.data.trackID);
+  });
+
   return (
     <>
       <iframe
@@ -81,6 +101,15 @@ function SoundCloudEmbed(props) {
     </>
   );
 }
+function BandCampEmbed(props) {
+  return (
+    <iframe
+      style={{ border: 0, width: 350, height: 470 }}
+      src="https://bandcamp.com/EmbeddedPlayer/album=3084686932/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=3844972671/transparent=true/"
+      seamless
+    ></iframe>
+  );
+}
 function YoutubeEmbed(props) {
   const len = props.url.length;
   const url = props.url;
@@ -101,11 +130,13 @@ function YoutubeEmbed(props) {
     ></iframe>
   );
 }
+
 function MovieClip(props) {
   const URLtoService = (url) => {
     if (url.indexOf("spotify") > -1) return "spotify";
     if (url.indexOf("youtu") > -1) return "youtube";
     if (url.indexOf("soundcloud") > -1) return "soundcloud";
+    if (url.indexOf("bandcamp") > -1) return "bandcamp";
     return null;
   };
   const musicData = props.musicData;
@@ -125,6 +156,7 @@ function MovieClip(props) {
         {serviceName == "youtube" && <YoutubeEmbed url={url} />}
         {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
         {serviceName == "spotify" && <SpotifyEmbed url={url} />}
+        {serviceName == "bandcamp" && <BandCampEmbed url={url} />}
         {serviceName == null && (
           <div
             style={{
@@ -139,7 +171,9 @@ function MovieClip(props) {
           >
             <div>
               <div>再生できません</div>
-              <div>{url}</div>
+              <div>
+                <a href={url}>{url}</a>
+              </div>
             </div>
           </div>
         )}
