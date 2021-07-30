@@ -52,7 +52,8 @@ function SpotifyEmbed(props) {
   );
 }
 function SoundCloudEmbed(props) {
-  const url = "https://soundcloud.com/uynet/45jqy2ydqyih";
+  const url = props.url;
+  const [trackID, setTrackID] = React.useState();
   const axios = axiosBase.create({
     baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
     params: {
@@ -66,38 +67,37 @@ function SoundCloudEmbed(props) {
     },
     responseType: "json",
   });
-  axios.get("api/getSoundCloudTrackID").then((res) => {
-    console.log(res.data.trackID);
-  });
+  if (trackID === undefined) {
+    axios.get("api/getSoundCloudTrackID").then((res) => {
+      console.log(res.data.trackID);
+      setTrackID(res.data.trackID);
+    });
+  }
 
   return (
     <>
-      <iframe
-        width="100%"
-        height="300"
-        scrolling="no"
-        frameBorder="no"
-        allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1064361319&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
-      ></iframe>
-      <div
-        style={{
-          fontSize: 10,
-          color: "#cccccc",
-          lineBreak: "anywhere",
-          wordBreak: "normal",
-          overflow: "hidden",
-          whiterSpace: "nowrap",
-          textOverflow: "ellipsis",
-          fontFamily:
-            "Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif",
-          fontWeight: 100,
-        }}
-      >
-        <a href="https://soundcloud.com/uynet/45jqy2ydqyih">
-          約束の地と最後の夏 / muyu + uynet
-        </a>
-      </div>
+      {trackID === undefined ? (
+        <div
+          style={{
+            width: "100%",
+            height: 300,
+            background: "#eee",
+          }}
+        ></div>
+      ) : (
+        <iframe
+          width="100%"
+          height="300"
+          scrolling="no"
+          frameBorder="no"
+          allow="autoplay"
+          src={
+            "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" +
+            trackID +
+            "&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+          }
+        ></iframe>
+      )}
     </>
   );
 }
