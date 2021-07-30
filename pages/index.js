@@ -59,6 +59,7 @@ function SpotifyEmbed(props) {
 }
 function SoundCloudEmbed(props) {
   const url = props.url;
+  let init = props.init;
   const [trackID, setTrackID] = React.useState();
   const axios = axiosBase.create({
     baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
@@ -72,10 +73,11 @@ function SoundCloudEmbed(props) {
     },
     responseType: "json",
   });
-  if (trackID === undefined) {
+  if (init) {
     axios.get("api/getSoundCloudTrackID").then((res) => {
       setTrackID(res.data.trackID);
     });
+    init = false;
   }
 
   return (
@@ -107,6 +109,7 @@ function SoundCloudEmbed(props) {
 }
 function BandCampEmbed(props) {
   const url = props.url;
+  let init = props.init;
   const [trackCode, setTrackID] = React.useState();
   const axios = axiosBase.create({
     baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
@@ -120,11 +123,12 @@ function BandCampEmbed(props) {
     },
     responseType: "json",
   });
-  if (trackCode === undefined) {
+  if (init) {
     axios.get("api/getBandCampTrackID").then((res) => {
       console.log(res.data.trackCode);
       setTrackID(res.data.trackCode);
     });
+    init = false;
   }
   return (
     <>
@@ -143,7 +147,6 @@ function BandCampEmbed(props) {
   );
 }
 function YoutubeEmbed(props) {
-  const len = props.url.length;
   const url = props.url;
   const ID = getYoutubeID(url);
   const embedURL = "https://www.youtube.com/embed/" + ID;
@@ -182,9 +185,11 @@ function MovieClip(props) {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ width: "60vw" }}>
         {serviceName == "youtube" && <YoutubeEmbed url={url} />}
-        {serviceName == "soundcloud" && <SoundCloudEmbed url={url} />}
+        {serviceName == "soundcloud" && (
+          <SoundCloudEmbed url={url} init={true} />
+        )}
         {serviceName == "spotify" && <SpotifyEmbed url={url} />}
-        {serviceName == "bandcamp" && <BandCampEmbed url={url} />}
+        {serviceName == "bandcamp" && <BandCampEmbed url={url} init={true} />}
         {serviceName == null && (
           <div
             style={{
