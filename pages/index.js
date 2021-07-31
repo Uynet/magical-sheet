@@ -10,7 +10,6 @@ const api =
 
 function MusicList(props) {
   const currentMusicNo = props.currentMusic ? props.currentMusic["No"] : null;
-  console.log(currentMusicNo);
   return (
     <>
       <div
@@ -112,7 +111,6 @@ function BandCampEmbed(props) {
   let init = props.init;
   const [trackCode, setTrackID] = React.useState();
   const axios = axiosBase.create({
-    baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
     params: {
       TrackURL: url,
     },
@@ -130,6 +128,7 @@ function BandCampEmbed(props) {
     });
     init = false;
   }
+  console.log(trackCode);
   return (
     <>
       {trackCode === undefined ? (
@@ -139,9 +138,7 @@ function BandCampEmbed(props) {
           style={{ border: 0, width: 350, height: 470 }}
           src={trackCode}
           seamless
-        >
-          trackCode
-        </iframe>
+        ></iframe>
       )}
     </>
   );
