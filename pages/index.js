@@ -203,7 +203,7 @@ function MovieClip(props) {
             }}
           >
             <div>
-              <div>再生できません</div>
+              <div>選択してください</div>
               <div>
                 <a href={url}>{url}</a>
               </div>
