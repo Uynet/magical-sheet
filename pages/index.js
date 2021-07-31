@@ -181,35 +181,26 @@ function MovieClip(props) {
   const writer = musicData ? musicData["書いた人(not composer)"] : "";
   const comment = musicData ? musicData["コメント"] : "";
   const serviceName = URLtoService(url);
-  //src = "https://www.youtube.com/embed/G2QGQd-yQ0s";
+  console.log(serviceName);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ width: "60vw" }}>
-        {serviceName == "youtube" && <YoutubeEmbed url={url} />}
-        {serviceName == "soundcloud" && (
-          <SoundCloudEmbed url={url} init={true} />
-        )}
-        {serviceName == "spotify" && <SpotifyEmbed url={url} />}
-        {serviceName == "bandcamp" && <BandCampEmbed url={url} init={true} />}
-        {serviceName == null && (
-          <div
-            style={{
-              background: "#eee",
-              width: "100%",
-              height: "60vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 10,
-            }}
-          >
-            <div>
-              <div>選択してください</div>
-              <div>
-                <a href={url}>{url}</a>
-              </div>
-            </div>
-          </div>
+        {musicData ? (
+          <>
+            {serviceName == "youtube" && <YoutubeEmbed url={url} />}
+            {serviceName == "soundcloud" && (
+              <SoundCloudEmbed url={url} init={true} />
+            )}
+            {serviceName == "spotify" && <SpotifyEmbed url={url} />}
+            {serviceName == "bandcamp" && (
+              <BandCampEmbed url={url} init={true} />
+            )}
+            {serviceName == null && (
+              <div className={styles.grayRect}>再生できません</div>
+            )}
+          </>
+        ) : (
+          <div className={styles.grayRect}>選択してください</div>
         )}
       </div>
       {musicData && (
