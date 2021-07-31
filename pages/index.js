@@ -43,11 +43,14 @@ function MusicList(props) {
 }
 function SpotifyEmbed(props) {
   const url = props.url;
-  const ID = url.split("track/")[1].split("?")[0];
+
+  const type = url.indexOf("track/") != -1 ? "track" : "album";
+  console.log(url);
+  const ID = url.split(type + "/")[1].split("?")[0];
   return (
     <>
       <iframe
-        src={"https://open.spotify.com/embed/track/" + ID}
+        src={"https://open.spotify.com/embed/" + type + "/" + ID}
         width="100%"
         height="380"
         frameBorder="0"
