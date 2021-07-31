@@ -42,15 +42,16 @@ function MusicList(props) {
   );
 }
 function SpotifyEmbed(props) {
+  const ref = React.useRef();
   const url = props.url;
 
   const type = url.indexOf("track/") != -1 ? "track" : "album";
-  console.log(url);
   const ID = url.split(type + "/")[1].split("?")[0];
   return (
     <>
       <iframe
         src={"https://open.spotify.com/embed/" + type + "/" + ID}
+        ref={ref}
         width="100%"
         height="380"
         frameBorder="0"
@@ -103,7 +104,7 @@ function SoundCloudEmbed(props) {
           src={
             "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" +
             trackID +
-            "&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
+            "&color=%23ff5500&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
           }
         ></iframe>
       )}
@@ -127,12 +128,10 @@ function BandCampEmbed(props) {
   });
   if (init) {
     axios.get("api/getBandCampTrackID").then((res) => {
-      console.log(res.data.trackCode);
       setTrackID(res.data.trackCode);
     });
     init = false;
   }
-  console.log(trackCode);
   return (
     <>
       {trackCode === undefined ? (
@@ -150,7 +149,7 @@ function BandCampEmbed(props) {
 function YoutubeEmbed(props) {
   const url = props.url;
   const ID = getYoutubeID(url);
-  const embedURL = "https://www.youtube.com/embed/" + ID;
+  const embedURL = "https://www.youtube.com/embed/" + ID + "?autoplay=1";
   return (
     <iframe
       style={{
@@ -181,7 +180,6 @@ function MovieClip(props) {
   const writer = musicData ? musicData["書いた人(not composer)"] : "";
   const comment = musicData ? musicData["コメント"] : "";
   const serviceName = URLtoService(url);
-  console.log(serviceName);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ width: "60vw" }}>
