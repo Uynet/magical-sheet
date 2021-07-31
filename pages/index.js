@@ -260,7 +260,7 @@ export default class Home extends React.Component {
             className={styles.link}
             href="https://docs.google.com/spreadsheets/d/1KasjqVSUkU0JHHYvpmytPJI_tBIkqpV_ZzhIBFBCjFc/edit#gid=0"
           >
-            おすすめ曲き書放題
+            おすすめ曲書き込み放題
           </a>
           専用のwebプレイヤーです
         </div>
