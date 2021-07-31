@@ -196,7 +196,9 @@ function MovieClip(props) {
               <BandCampEmbed url={url} init={true} />
             )}
             {serviceName == null && (
-              <div className={styles.grayRect}>再生できません</div>
+              <div className={styles.grayRect}>
+                <a href={url}>再生できません</a>
+              </div>
             )}
           </>
         ) : (
