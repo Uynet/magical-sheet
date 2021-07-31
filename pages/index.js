@@ -20,6 +20,7 @@ function MusicList(props) {
         }}
       >
         {props.data.map((d, i) => {
+          if (d["リンク(SoundCloud, Spotify, YouTube)"] == null) return;
           const isSelected = currentMusicNo == d["No"];
           const className = isSelected
             ? styles.selectedMusicItem
