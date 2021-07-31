@@ -1,8 +1,11 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import React, { useState, useEffect } from "react";
-import getYoutubeID from "get-youtube-id";
-import axiosBase from "axios";
+import React from "react";
+import { BandCampEmbed } from "./components/bandcampEmbed.js";
+import { YoutubeEmbed } from "./components/youtubeEmbed.js";
+import { SoundCloudEmbed } from "./components/soundcloudEmbed.js";
+import { SpotifyEmbed } from "./components/spotifyEmbed.js";
+
 const fetch = require("node-fetch");
 
 const api =
@@ -39,128 +42,6 @@ function MusicList(props) {
         })}
       </div>
     </>
-  );
-}
-function SpotifyEmbed(props) {
-  const ref = React.useRef();
-  const url = props.url;
-
-  const type = url.indexOf("track/") != -1 ? "track" : "album";
-  const ID = url.split(type + "/")[1].split("?")[0];
-  return (
-    <>
-      <iframe
-        src={"https://open.spotify.com/embed/" + type + "/" + ID}
-        ref={ref}
-        width="100%"
-        height="380"
-        frameBorder="0"
-        allowtransparency="true"
-        allow="encrypted-media"
-      ></iframe>
-    </>
-  );
-}
-function SoundCloudEmbed(props) {
-  const url = props.url;
-  let init = props.init;
-  const [trackID, setTrackID] = React.useState();
-  const axios = axiosBase.create({
-    //baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
-    params: {
-      TrackURL: url,
-    },
-    headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-      "Access-Control-Allow-Origin": "*",
-    },
-    responseType: "json",
-  });
-  if (init) {
-    axios.get("api/getSoundCloudTrackID").then((res) => {
-      setTrackID(res.data.trackID);
-    });
-    init = false;
-  }
-
-  return (
-    <>
-      {trackID === undefined ? (
-        <div
-          style={{
-            width: "100%",
-            height: 300,
-            background: "#eee",
-          }}
-        ></div>
-      ) : (
-        <iframe
-          width="100%"
-          height="300"
-          scrolling="no"
-          frameBorder="no"
-          allow="autoplay"
-          src={
-            "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" +
-            trackID +
-            "&color=%23ff5500&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"
-          }
-        ></iframe>
-      )}
-    </>
-  );
-}
-function BandCampEmbed(props) {
-  const url = props.url;
-  let init = props.init;
-  const [trackCode, setTrackID] = React.useState();
-  const axios = axiosBase.create({
-    params: {
-      TrackURL: url,
-    },
-    headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-      "Access-Control-Allow-Origin": "*",
-    },
-    responseType: "json",
-  });
-  if (init) {
-    axios.get("api/getBandCampTrackID").then((res) => {
-      setTrackID(res.data.trackCode);
-    });
-    init = false;
-  }
-  return (
-    <>
-      {trackCode === undefined ? (
-        <div style={{ width: 350, height: 470, background: "#eee" }}></div>
-      ) : (
-        <iframe
-          style={{ border: 0, width: 350, height: 470 }}
-          src={trackCode}
-          seamless
-        ></iframe>
-      )}
-    </>
-  );
-}
-function YoutubeEmbed(props) {
-  const url = props.url;
-  const ID = getYoutubeID(url);
-  const embedURL = "https://www.youtube.com/embed/" + ID + "?autoplay=1";
-  return (
-    <iframe
-      style={{
-        width: "100%",
-        height: "60vh",
-      }}
-      src={embedURL}
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
   );
 }
 
