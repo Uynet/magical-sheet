@@ -62,7 +62,7 @@ function SoundCloudEmbed(props) {
   let init = props.init;
   const [trackID, setTrackID] = React.useState();
   const axios = axiosBase.create({
-    baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
+    //baseURL: "http://localhost:3000", // バックエンドB のURL:port を指定する
     params: {
       TrackURL: url,
     },
